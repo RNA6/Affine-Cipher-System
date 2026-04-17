@@ -69,10 +69,10 @@ public class WelcomePage extends JFrame{
                 new DecryptPage(affineCipher);
             }
         });
-        
+        //specify the location of the element
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.insets = new Insets(10, 0, 30, 0);
+        constraints.insets = new Insets(10, 0, 30, 0); // similar to padding
         buttons_panel.add(encrypt_button, constraints);
         
         constraints.gridx = 0;
@@ -89,19 +89,14 @@ public class WelcomePage extends JFrame{
         this.setVisible(true);
     }
     
+    //Label Panel Declaration
     private void createLabel_panel(){
         label_panel = new JPanel();       
         label_panel.setOpaque(false);
         label_panel.setPreferredSize(new Dimension(320, 400)); 
     }
     
-    private void createButtons_panel(){
-        buttons_panel = new JPanel(new GridBagLayout());
-        constraints = new GridBagConstraints();        
-        buttons_panel.setOpaque(false);
-        buttons_panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 75, 0));
-    }
-    
+    //Label Panel Components
     private void createLabels(){        
         welcome_label = new JLabel("Welcome to Affine Cipher System"); 
         welcome_label.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
@@ -111,7 +106,17 @@ public class WelcomePage extends JFrame{
         action_label.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
         action_label.setFont(new Font("Serif", Font.BOLD, 21));
     }
+    //#End of Label Panel Components
     
+    //Buttons Panel Declaration
+    private void createButtons_panel(){
+        buttons_panel = new JPanel(new GridBagLayout());
+        constraints = new GridBagConstraints();        
+        buttons_panel.setOpaque(false);
+        buttons_panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 75, 0));
+    }
+    
+    // Buttons Panel Components
     private JButton createButton(String text){
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(200, 40));
@@ -121,5 +126,6 @@ public class WelcomePage extends JFrame{
         
         return button;
     }
+    //#End of Buttons Panel Components
 
 }

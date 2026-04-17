@@ -8,7 +8,7 @@ package AffineCipherSystem;
  *
  * @author RNA
  */
-public class Project {
+public class AffineCipherSystem {
 
     /**
      * @param args the command line arguments
