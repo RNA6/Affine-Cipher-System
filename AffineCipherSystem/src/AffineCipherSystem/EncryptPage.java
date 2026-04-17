@@ -32,7 +32,7 @@ public class EncryptPage extends JFrame{
         
         getContentPane().setBackground(new Color(218,255,252));
         
-        Font font=new Font("Serif", Font.BOLD, 20);
+        Font font=new Font("Serif", Font.BOLD, 18);
         
         this.affineCipher = affineCipher;
                 
@@ -85,16 +85,14 @@ public class EncryptPage extends JFrame{
                 }
                 
                 String cipher = affineCipher.encrypt(ka,kb,plain);
-                result.setText(cipher);
-                
+                result.setText(cipher);                
        
-            }
-            
+            }            
         }
         );
         
-        setSize(400,500);
-        setLocation(450, 170);
+        setSize(250,320);
+        setLocation(530, 250);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);  
