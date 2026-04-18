@@ -17,9 +17,6 @@ public class AffineCipherSystem {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
         
         AffineCipher a = new AffineCipher(characters);
-        System.out.println(a.checkGCD(3));
-        System.out.println(a.encrypt(3, 4, "MONEY"));
-        System.out.println(a.decrypt(25, 4, "DJGQC"));
         
         new WelcomePage(a);
     }

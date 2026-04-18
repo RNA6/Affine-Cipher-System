@@ -5,7 +5,6 @@
 package AffineCipherSystem;
 
 import javax.swing.*;
-import java.awt.FlowLayout;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -71,17 +70,39 @@ public class EncryptPage extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 
                 String plain =  plain_text.getText();
-                int ka = Integer.parseInt(a.getText());
-                int kb = Integer.parseInt(b.getText());
+                int ka ;
+                int kb; 
+                
+                //checks if any of the fields is empty
+                if(plain_text.getText().trim().isEmpty()||a.getText().trim().isEmpty()||b.getText().trim().isEmpty())
+                {
+                    //informs the user of the problem
+                    JOptionPane.showMessageDialog(null, "Please fill all fields");
+                    return;
+                }
+                // informs the user to enter only numbers if he/she entered other characters
+                try
+                {
+                    ka = Integer.parseInt(a.getText());
+                    kb = Integer.parseInt(b.getText()); 
+                }
+                catch(NumberFormatException ex)
+                {
+                    JOptionPane.showMessageDialog(null, "keys must be numbers");
+                    return;
+
+                }
                 
                 if(!affineCipher.checkCharacters(plain))
                 {
                     JOptionPane.showMessageDialog(null, "Invalid Characters");
+                    return;
                 }
                 
                 if(!affineCipher.checkGCD(ka))
                 {
                     JOptionPane.showMessageDialog(null, "Invalid key");
+                    return;
                 }
                 
                 String cipher = affineCipher.encrypt(ka,kb,plain);
