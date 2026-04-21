@@ -6,6 +6,7 @@ package AffineCipherSystem;
 
 import java.util.ArrayList;
 import java.math.BigInteger;
+import java.util.HashMap;
 
 /**
  *
@@ -16,6 +17,7 @@ public class AffineCipher {
     //Affine cipher will not change. Therefore, its attributes are set final 
     private final ArrayList<Character> charcters;
     private final int numOfCharacters;
+    private HashMap<Integer, Integer> keys; //similar to a dictionary to store key and key inverse pairs
 
     public AffineCipher(String charactersString) {
         //For making it easy to understand, the set of characters are passed as String of characters
@@ -30,9 +32,7 @@ public class AffineCipher {
         
         this.numOfCharacters = this.charcters.size();
         
-        //##Logs
-        System.out.println(this.charcters);
-        System.out.println(this.numOfCharacters);
+        keys = new HashMap<>();
     }
     
     public boolean checkGCD(int keyA){//verifies if the greater common divisor of keyA and number of characters is 1
@@ -42,6 +42,7 @@ public class AffineCipher {
         BigInteger numOfCharacters_BigInteger = BigInteger.valueOf(this.numOfCharacters);
         BigInteger keyA_BigInteger = BigInteger.valueOf(keyA);
        
+        //BigInteger gcd function calculates the gcd of the 2 numbers
         int gcd = numOfCharacters_BigInteger.gcd(keyA_BigInteger).intValue();
         return gcd == 1;        
     }
@@ -55,6 +56,31 @@ public class AffineCipher {
             text = text.replaceAll(String.valueOf(text.charAt(index)), "");
         }
         return true;  
+    }
+    
+    private int get_a_inverse(int keyA) throws ArithmeticException{ //gets the inverse of keyA
+        
+        if(keys.containsKey(keyA)){ //checks if the key is stored previously
+            return keys.get(keyA);
+        }
+        
+        else if(keys.containsValue(keyA)){ //checks if the key is stored as an inverse key
+            for (int key : keys.keySet()) { //loops until the key inverse is found
+                if(keys.get(key) == keyA){
+                    return key;
+                }
+            }
+        }        
+        
+        //if the inverse key is not found in the hashmap, it must be calculated
+        BigInteger numOfCharacters_BigInteger = BigInteger.valueOf(this.numOfCharacters);
+        BigInteger keyA_BigInteger = BigInteger.valueOf(keyA);
+        
+        //BigInteger modInverse function returns the modular multiplicative inverse which is the inverse of the key
+        int keyA_inverse = keyA_BigInteger.modInverse(numOfCharacters_BigInteger).intValue();
+
+        keys.put(keyA, keyA_inverse); //add the key and key inverse pair to the hashmap
+        return keyA_inverse;
     }
     
     public String encrypt(int keyA, int keyB, String plainText){//returns the encrypted text
@@ -72,8 +98,9 @@ public class AffineCipher {
         return cipherText;                
     }
     
-    public String decrypt(int keyA_Inverse, int keyB, String cipherText){ //returns the decrypted text
+    public String decrypt(int keyA, int keyB, String cipherText) throws ArithmeticException{ //returns the decrypted text
         String plainText = "";
+        int keyA_Inverse = get_a_inverse(keyA);
         
         for(int index = 0; index < cipherText.length(); index++){
             char textCharacter = cipherText.charAt(index);

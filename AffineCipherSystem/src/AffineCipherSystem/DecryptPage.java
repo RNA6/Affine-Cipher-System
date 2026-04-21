@@ -106,7 +106,16 @@ public class DecryptPage extends JFrame{
                     return;
                 }
                 
-                String plain = affineCipher.decrypt(ka,kb,cipher);
+                String plain;
+                
+                try{
+                    plain = affineCipher.decrypt(ka,kb,cipher);
+                }
+                catch(ArithmeticException exception){
+                    JOptionPane.showMessageDialog(null, "Key does not have inverse!");
+                    return;
+                }
+                
                 result.setText(plain);                
        
             }            
